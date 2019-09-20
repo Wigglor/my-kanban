@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>MyKanban</h1>
+    <div class="input-section">
+      <div class="item title-input">
+        <label for="">Title</label>
+        <input id="title-input" type="text" />
+      </div>
+      <div class="item description-input">
+        <label for="">Description</label>
+        <input id="description-input" type="text" />
+      </div>
+      <div class="item">
+        <div class="priority-input">
+          <label for="priority">Priority</label>
+          <select id="priority-input" name="priority">
+            <option value="low" id="low">Low</option>
+            <option value="medium" id="medium">Medium</option>
+            <option value="high" id="high">High</option>
+          </select>
+        </div>
+      </div>
+      <div class="item">
+        <div class="stage-input">
+          <label for="to-do-stage">To-do Stage</label>
+          <select name="to-do-stage" id="stage-input">
+            <option value="todo" id="to-do">To-do</option>
+            <option value="doing" id="doing">Doing</option>
+            <option value="blocked" id="blocked">Blocked</option>
+            <option value="done" id="done">Done</option>
+          </select>
+        </div>
+      </div>
+      <div class="item">
+        <button id="add-button">Add Task</button>
+      </div>
+    </div>
+    <div class="kanban-header-section">
+      <h2 class="kanban-header-item">To-do</h2>
+      <h2 class="kanban-header-item">Doing</h2>
+      <h2 class="kanban-header-item">Blocked</h2>
+      <h2 class="kanban-header-item">Done</h2>
+    </div>
+    <div class="kanban-section">
+      <div id="todo-output" class="to-do kanban-item"></div>
+      <div id="doing-output" class="doing kanban-item">
+        <div class="kanban-item-task">Task</div>
+      </div>
+      <div id="blocked-output" class="blocked kanban-item"></div>
+      <div id="done-output" class="done kanban-item"></div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
