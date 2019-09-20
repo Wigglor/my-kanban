@@ -20,9 +20,17 @@ UI.prototype.addTask = function(task) {
     <p>${task.description}</p>
     <p><b>Prio: </b>${task.priority}</p>
     <p><b>Stage: </b>${task.stage}</p>
+    <p class="remove-task">x</p>
     `;
   output.appendChild(cardTask);
   // console.log(cardTask)
+};
+
+//remove a task
+UI.prototype.removeTask = function() {
+  document.querySelector(".remove-task").addEventListener("click", function(e) {
+    console.log(e.target.value);
+  });
 };
 
 document.querySelector("#add-button").addEventListener("click", function(e) {
