@@ -1,0 +1,22 @@
+{
+  "name": "mykanban",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wigglor/my-kanban.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wigglor/my-kanban/issues"
+  },
+  "homepage": "https://github.com/Wigglor/my-kanban#readme",
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.1"
+  }
+}
