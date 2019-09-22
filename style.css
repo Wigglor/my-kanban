@@ -14,6 +14,11 @@ body {
   padding: 10px;
 }
 
+.type-field {
+  display: flex;
+  border-radius: 10px;
+}
+
 /* .task-input {
   background: #333;
 } */

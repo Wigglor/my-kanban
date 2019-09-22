@@ -44,15 +44,14 @@ UI.prototype.clearFields = function() {
 
 UI.prototype.showAlert = function() {
   //   const noInput = (document.querySelector(".task-input").value = "Input here");
-  let alertColor = (document.querySelector(".task-input").style.background =
-    "rgb(252, 5, 5)");
+  document.querySelector(".type-field").style.background = "rgb(252, 5, 5)";
 
   //   if (noInput !== "") {
   //     noInput.remove();
   //   }
 
   setTimeout(() => {
-    document.querySelector(".task-input").style.background = "#fff";
+    document.querySelector(".type-field").style.background = "#f1f1f1";
   }, 3000);
 
   //   alert("Please fill in all fields");
