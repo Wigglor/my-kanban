@@ -8,6 +8,10 @@
       href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="node_modules/@fortawesome/fontawesome-free/css/all.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
@@ -54,13 +58,24 @@
       <h2 class="kanban-header-item">Done</h2>
     </div>
     <div class="kanban-section">
-      <div id="todo-output" class="to-do kanban-item"></div>
-      <div id="doing-output" class="doing kanban-item">
-        <div class="kanban-item-task">Task</div>
+      <div id="todo-output" class="to-do kanban-item">
+        <div class="kanban-item-task">
+          <i class="fas fa-times"></i>
+          <h2>title</h2>
+          <p>description</p>
+          <p><b>Prio: </b>priority</p>
+          <p><b>Stage: </b>stage</p>
+        </div>
       </div>
+      <div id="doing-output" class="doing kanban-item"></div>
       <div id="blocked-output" class="blocked kanban-item"></div>
       <div id="done-output" class="done kanban-item"></div>
     </div>
     <script src="app.js"></script>
   </body>
 </html>
+
+<!-- <div class="kanban-item-task remove-card">
+          Task
+          <i id="remove-task" class="fas fa-times"></i>
+        </div> -->
