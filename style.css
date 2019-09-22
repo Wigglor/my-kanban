@@ -13,6 +13,10 @@ body {
   display: flex;
   padding: 10px;
 }
+
+/* .task-input {
+  background: #333;
+} */
 .item {
   padding: 10px;
 }

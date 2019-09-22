@@ -24,15 +24,38 @@ UI.prototype.addTask = function(task) {
     <p><b>Stage: </b>${task.stage}</p>
     `;
   output.appendChild(cardTask);
+
   // console.log(cardTask)
 };
 
 //remove a task
 UI.prototype.removeTask = function(target) {
   //   console.log(target.childNodes[0].childNodes[1].className);
+  console.log(target.className);
   if (target.className === "fas fa-times") {
     target.parentElement.remove();
   }
+};
+
+UI.prototype.clearFields = function() {
+  document.querySelector("#title-input").value = "";
+  document.querySelector("#description-input").value = "";
+};
+
+UI.prototype.showAlert = function() {
+  //   const noInput = (document.querySelector(".task-input").value = "Input here");
+  let alertColor = (document.querySelector(".task-input").style.background =
+    "rgb(252, 5, 5)");
+
+  //   if (noInput !== "") {
+  //     noInput.remove();
+  //   }
+
+  setTimeout(() => {
+    document.querySelector(".task-input").style.background = "#fff";
+  }, 3000);
+
+  //   alert("Please fill in all fields");
 };
 
 document.querySelector("#add-button").addEventListener("click", function(e) {
@@ -47,7 +70,13 @@ document.querySelector("#add-button").addEventListener("click", function(e) {
   //   if (stage === "doing") {
   //     ui.addTask(task);
   //   }
-  ui.addTask(task);
+
+  if (title == "" || description == "") {
+    ui.showAlert();
+  } else {
+    ui.addTask(task);
+    ui.clearFields();
+  }
 });
 
 document
