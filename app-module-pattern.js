@@ -70,6 +70,9 @@ const TaskCtrl = (function(){
 
             document.querySelector(UISelectors.todoOutput).innerHTML = html;
         },
+        getSelectors: function(){
+            return UISelectors;
+        },
         inputTitle: function(){
             document.querySelector(UISelectors.titleInput).addEventListener("input", function(e){
                 const todoSection = document.querySelector(UISelectors.todoOutput)
@@ -107,7 +110,9 @@ const TaskCtrl = (function(){
   // App Controller
   const App = (function(TaskCtrl, UICtrl){
     // Public methods
-
+    const loadEventListeners = function(){
+        const UISelectors = UICtrl.getSelectors()
+    }
     // UICtrl.inputTitle();
     UICtrl.inputDescription();
     UICtrl.inputPriority();
