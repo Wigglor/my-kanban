@@ -15,30 +15,30 @@ const TaskCtrl = (function() {
   // Data Structure / State / dummy data
   const data = {
     task: [
-      {
-        title: "Number 1",
-        description: "Kanban Item 1",
-        priority: "low",
-        stage: "doing",
-        points: 1,
-        id: 0
-      },
-      {
-        title: "Number 2",
-        description: "Kanban Item 2",
-        priority: "medium",
-        stage: "todo",
-        points: 5,
-        id: 1
-      },
-      {
-        title: "Number 3",
-        description: "Kanban Item 3",
-        priority: "high",
-        stage: "done",
-        points: 10,
-        id: 2
-      }
+      // {
+      //   title: "Number 1",
+      //   description: "Kanban Item 1",
+      //   priority: "low",
+      //   stage: "doing",
+      //   points: 1,
+      //   id: 0
+      // },
+      // {
+      //   title: "Number 2",
+      //   description: "Kanban Item 2",
+      //   priority: "medium",
+      //   stage: "todo",
+      //   points: 5,
+      //   id: 1
+      // },
+      // {
+      //   title: "Number 3",
+      //   description: "Kanban Item 3",
+      //   priority: "high",
+      //   stage: "done",
+      //   points: 10,
+      //   id: 2
+      // }
     ],
     currentTask: null,
     totalPoints: 0
@@ -78,7 +78,10 @@ const UICtrl = (function() {
     descriptionInput: "#description-input",
     priorityInput: "#priority-input",
     stageInput: "#stage-input",
-    todoOutput: "#todo-output"
+    todoOutput: "#todo-output",
+    doingOutput: "#doing-output",
+    blockedOutput: "#blocked-output",
+    doneOutput: "#done-output"
   };
 
   // Public methods
@@ -88,6 +91,7 @@ const UICtrl = (function() {
 
       tasks.forEach(function(task) {
         html += `
+        <div class="kanban-item-task">
                 <i class="fas fa-times"></i>  
                 <h2>${task.title}</h2>
                 <p>${task.description}</p>
@@ -95,6 +99,7 @@ const UICtrl = (function() {
                 <p><b>Stage: </b>${task.stage}</p>
                 <p><b>Points: </b>${task.points}</p>
                 <p><b>ID: </b>${task.id}</p>
+            </div>
                 `;
       });
 
@@ -102,6 +107,30 @@ const UICtrl = (function() {
     },
     getSelectors: function() {
       return UISelectors;
+    },
+    addTaskItem: function(task){
+      console.log(task.stage.value)
+      const div = document.createElement('div');
+      div.className = "kanban-item-task";
+      div.id = `task-${task.id}`;
+      div.innerHTML = `
+      <i class="fas fa-times"></i>  
+      <h2>${task.title.value}</h2>
+      <p>${task.description.value}</p>
+      <p><b>Prio: </b>${task.priority.value}</p>
+      <p><b>Stage: </b>${task.stage.value}</p>
+      <p><b>ID: </b>${task.id}</p>
+      `;
+
+      if(task.stage.value === "todo"){
+        document.querySelector(UISelectors.todoOutput).insertAdjacentElement('beforeend', div)
+      } else if(task.stage.value === "doing"){
+        document.querySelector(UISelectors.doingOutput).insertAdjacentElement('beforeend', div)
+      } else if(task.stage.value === "blocked"){
+        document.querySelector(UISelectors.blockedOutput).insertAdjacentElement('beforeend', div)
+      } else if(task.stage.value === "done"){
+        document.querySelector(UISelectors.doneOutput).insertAdjacentElement('beforeend', div)
+      }
     },
     getTaskInput: function() {
       return {
@@ -135,6 +164,8 @@ const App = (function(TaskCtrl, UICtrl) {
       
       if(input.title.value !== "" && input.description.value !== ""){
       const newTask = TaskCtrl.addTask(input.title, input.description, input.priority, input.stage)
+        // console.log(newTask)
+      UICtrl.addTaskItem(newTask)
       }
 
       e.preventDefault();

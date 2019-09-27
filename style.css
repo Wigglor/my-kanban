@@ -59,6 +59,9 @@ body {
 
 .kanban-item-task {
   background: rgb(230, 108, 8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   /* padding: 30px; */
   flex-basis: 20%;
   /* height: 20px; */
