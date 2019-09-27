@@ -12,7 +12,7 @@ const TaskCtrl = (function() {
     this.id = id;
   };
 
-  // Data Structure / State
+  // Data Structure / State / dummy data
   const data = {
     task: [
       {
