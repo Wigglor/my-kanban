@@ -109,9 +109,9 @@ const UICtrl = (function() {
       return UISelectors;
     },
     addTaskItem: function(task){
-      console.log(task.stage.value)
+      console.log(task.priority.value)
       const div = document.createElement('div');
-      div.className = "kanban-item-task";
+      div.className = `kanban-item-task-${task.priority.value}`;
       div.id = `task-${task.id}`;
       div.innerHTML = `
       <i class="fas fa-times"></i>  
@@ -131,6 +131,10 @@ const UICtrl = (function() {
       } else if(task.stage.value === "done"){
         document.querySelector(UISelectors.doneOutput).insertAdjacentElement('beforeend', div)
       }
+
+      // if(task.priority.value = "low"){
+
+      // }
     },
     getTaskInput: function() {
       return {
