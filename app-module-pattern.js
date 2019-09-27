@@ -54,18 +54,17 @@ const TaskCtrl = (function() {
     },
     addTask: function(title, description, priority, stage) {
       let ID;
-      if(data.task.length > 0){
+      if (data.task.length > 0) {
         ID = data.task[data.task.length - 1].id + 1;
-      } else{
-        ID = 0
+      } else {
+        ID = 0;
       }
 
-      newTask = new Task(title, description, priority, stage, ID)
-      
-      data.task.push(newTask)
+      newTask = new Task(title, description, priority, stage, ID);
 
-      return newTask
-      
+      data.task.push(newTask);
+
+      return newTask;
     }
   };
 })();
@@ -108,9 +107,9 @@ const UICtrl = (function() {
     getSelectors: function() {
       return UISelectors;
     },
-    addTaskItem: function(task){
-      console.log(task.priority.value)
-      const div = document.createElement('div');
+    addTaskItem: function(task) {
+      console.log(task.priority.value);
+      const div = document.createElement("div");
       div.className = `kanban-item-task-${task.priority.value}`;
       div.id = `task-${task.id}`;
       div.innerHTML = `
@@ -122,14 +121,22 @@ const UICtrl = (function() {
       <p><b>ID: </b>${task.id}</p>
       `;
 
-      if(task.stage.value === "todo"){
-        document.querySelector(UISelectors.todoOutput).insertAdjacentElement('beforeend', div)
-      } else if(task.stage.value === "doing"){
-        document.querySelector(UISelectors.doingOutput).insertAdjacentElement('beforeend', div)
-      } else if(task.stage.value === "blocked"){
-        document.querySelector(UISelectors.blockedOutput).insertAdjacentElement('beforeend', div)
-      } else if(task.stage.value === "done"){
-        document.querySelector(UISelectors.doneOutput).insertAdjacentElement('beforeend', div)
+      if (task.stage.value === "todo") {
+        document
+          .querySelector(UISelectors.todoOutput)
+          .insertAdjacentElement("beforeend", div);
+      } else if (task.stage.value === "doing") {
+        document
+          .querySelector(UISelectors.doingOutput)
+          .insertAdjacentElement("beforeend", div);
+      } else if (task.stage.value === "blocked") {
+        document
+          .querySelector(UISelectors.blockedOutput)
+          .insertAdjacentElement("beforeend", div);
+      } else if (task.stage.value === "done") {
+        document
+          .querySelector(UISelectors.doneOutput)
+          .insertAdjacentElement("beforeend", div);
       }
 
       // if(task.priority.value = "low"){
@@ -153,6 +160,10 @@ const UICtrl = (function() {
           output.innerHTML = e.target.value;
           todoSection.appendChild(output);
         });
+    },
+    clearInput: function() {
+      document.querySelector(UISelectors.titleInput).value = "";
+      document.querySelector(UISelectors.descriptionInput).value = "";
     }
   };
 })();
@@ -165,13 +176,19 @@ const App = (function(TaskCtrl, UICtrl) {
 
     const taskAddSubmit = function(e) {
       const input = UICtrl.getTaskInput();
-      
-      if(input.title.value !== "" && input.description.value !== ""){
-      const newTask = TaskCtrl.addTask(input.title, input.description, input.priority, input.stage)
+
+      if (input.title.value !== "" && input.description.value !== "") {
+        const newTask = TaskCtrl.addTask(
+          input.title,
+          input.description,
+          input.priority,
+          input.stage
+        );
         // console.log(newTask)
-      UICtrl.addTaskItem(newTask)
+        UICtrl.addTaskItem(newTask);
       }
 
+      UICtrl.clearInput();
       e.preventDefault();
     };
     document
