@@ -44,7 +44,7 @@ body {
 
 .kanban-section {
   display: flex;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .kanban-item {
@@ -55,6 +55,18 @@ body {
   border: solid rgba(122, 118, 118, 0.774) 0.1px;
   flex-basis: 25%;
   height: 100vh;
+  overflow: scroll;
+}
+
+.kanban-item-insert-queue {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #fff;
+  border: solid rgba(122, 118, 118, 0.774) 0.1px;
+  flex-basis: 25%;
+  height: 60vh;
+  overflow: scroll;
 }
 
 .kanban-item-task {
@@ -75,6 +87,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   background: rgb(9, 230, 27);
+  margin: 0 10px 0 10px;
   /* padding: 30px; */
   flex-basis: 20%;
   /* height: 20px; */
@@ -109,6 +122,31 @@ body {
   margin-bottom: 15px;
 }
 
+.kanban-item-task-high {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: rgb(252, 5, 5);
+  /* padding: 30px; */
+  flex-basis: 20%;
+  /* height: 20px; */
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.kanban-item-task-queue {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* padding: 30px; */
+  flex-basis: 20%;
+  /* height: 20px; */
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
 .fas.fa-times {
   color: #333;
   align-self: flex-end;
@@ -117,4 +155,14 @@ body {
 
 .remove-task {
   color: #333;
+}
+
+/* Compare Section */
+.compare-section {
+  display: flex;
+  flex-direction: row;
+  padding: 45px;
+  background: #fff;
+  border: solid rgba(122, 118, 118, 0.774) 0.1px;
+  flex-basis: 25%;
 }

@@ -80,7 +80,8 @@ const UICtrl = (function() {
     todoOutput: "#todo-output",
     doingOutput: "#doing-output",
     blockedOutput: "#blocked-output",
-    doneOutput: "#done-output"
+    doneOutput: "#done-output",
+    queueOutput: "#queue-output"
   };
 
   // Public methods
@@ -136,6 +137,13 @@ const UICtrl = (function() {
       } else if (task.stage.value === "done") {
         document
           .querySelector(UISelectors.doneOutput)
+          .insertAdjacentElement("beforeend", div);
+      } else if (task.stage.value === "queue") {
+        document.querySelector(UISelectors.queueOutput).className =
+          "compare-section";
+        //replace class here with .kanban-item-insert-queue
+        document
+          .querySelector(UISelectors.queueOutput)
           .insertAdjacentElement("beforeend", div);
       }
 
