@@ -54,7 +54,8 @@ body {
   background: #fff;
   border: solid rgba(122, 118, 118, 0.774) 0.1px;
   flex-basis: 25%;
-  height: 100vh;
+  /* height: 100vh; this should be visible when nothing sis added to the queue*/
+  height: 60vh;
   overflow: scroll;
 }
 
