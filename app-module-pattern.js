@@ -15,14 +15,15 @@ const TaskCtrl = (function() {
   // Data Structure / State / dummy data
   const data = {
     task: [
-      // {
-      //   title: "Number 1",
-      //   description: "Kanban Item 1",
-      //   priority: "low",
-      //   stage: "doing",
-      //   points: 1,
-      //   id: 0
-      // },
+      {
+        title: "Number 1",
+        description: "Kanban Item 1",
+        priority: "low",
+        stage: "doing",
+        points: 1,
+        id: 0
+      }
+      // ,
       // {
       //   title: "Number 2",
       //   description: "Kanban Item 2",
@@ -61,10 +62,50 @@ const TaskCtrl = (function() {
       }
 
       newTask = new Task(title, description, priority, stage, ID);
-
+      // console.log(newTask);
       data.task.push(newTask);
 
       return newTask;
+    },
+    getCurrentTask: function() {
+      return data.currentTask;
+    },
+    deleteTask: function(target) {
+      console.log(target);
+
+      const ids = data.task.map(function(tsk) {
+        return tsk.id;
+      });
+      console.log(ids);
+
+      const index = ids.indexOf(target);
+      console.log(index);
+      data.task.splice(index, 1);
+
+      // console.log(index);
+
+      // const ids = data.task.map(function(tsk) {
+      //   return tsk;
+      // });
+
+      // const index = ids.indexOf(target);
+
+      // console.log(data.task);
+      /*const loopData = data.task;
+
+      loopData.forEach(function(task, i) {
+        if (task.id.toString() === target.parentNode.id) {
+          // console.log(task.id.toString());
+          console.log(task);
+          console.log(`task: ${task.id} index: ${i}`);
+        }
+      });*/
+
+      // const index = loopData.indexOf(target);
+      // console.log(index);
+      // console.log(data.task[0].id.toString());
+
+      // console.log(target.parentNode.id);
     }
   };
 })();
@@ -72,6 +113,7 @@ const TaskCtrl = (function() {
 // UI Controller
 const UICtrl = (function() {
   const UISelectors = {
+    kanbanSection: ".kanban-section",
     btnEl: "#add-button",
     titleInput: "#title-input",
     descriptionInput: "#description-input",
@@ -81,7 +123,10 @@ const UICtrl = (function() {
     doingOutput: "#doing-output",
     blockedOutput: "#blocked-output",
     doneOutput: "#done-output",
-    queueOutput: "#queue-output"
+    queueOutput: "#queue-output",
+    itemTask: ".kanban-item-task",
+    removeIcon: ".fas.fa-times",
+    removeIcon2: "fas fa-times"
   };
 
   // Public methods
@@ -109,14 +154,15 @@ const UICtrl = (function() {
       return UISelectors;
     },
     addTaskItem: function(task) {
-      console.log(task.priority.value);
+      // console.log(task.priority.value);
       const div = document.createElement("div");
       div.className = `kanban-item-task-${task.priority.value}`;
-      div.id = `task-${task.id}`;
+      // div.id = `task-${task.id}`;
+      div.id = `${task.id}`;
       div.innerHTML = `
       <i class="fas fa-times"></i>  
-      <h2>${task.title.value}</h2>
-      <p>${task.description.value}</p>
+      <h2>${task.title}</h2>
+      <p>${task.description}</p>
       <p><b>Prio: </b>${task.priority.value}</p>
       <p><b>Stage: </b>${task.stage.value}</p>
       <p><b>ID: </b>${task.id}</p>
@@ -153,8 +199,8 @@ const UICtrl = (function() {
     },
     getTaskInput: function() {
       return {
-        title: document.querySelector(UISelectors.titleInput),
-        description: document.querySelector(UISelectors.descriptionInput),
+        title: document.querySelector(UISelectors.titleInput).value,
+        description: document.querySelector(UISelectors.descriptionInput).value,
         priority: document.querySelector(UISelectors.priorityInput),
         stage: document.querySelector(UISelectors.stageInput)
       };
@@ -172,6 +218,14 @@ const UICtrl = (function() {
     clearInput: function() {
       document.querySelector(UISelectors.titleInput).value = "";
       document.querySelector(UISelectors.descriptionInput).value = "";
+    },
+    deleteTaskItem: function(target) {
+      console.log(target);
+      // if (target.className === "fas fa-times") {
+      //   console.log(target);
+      //   // target.parentNode.remove();
+      //   // TaskCtrl.deleteTask(target);
+      // }
     }
   };
 })();
@@ -184,8 +238,11 @@ const App = (function(TaskCtrl, UICtrl) {
 
     const taskAddSubmit = function(e) {
       const input = UICtrl.getTaskInput();
+      console.log(input.title);
+      console.log(input);
+      console.log(input);
 
-      if (input.title.value !== "" && input.description.value !== "") {
+      if (input.title !== "" && input.description !== "") {
         const newTask = TaskCtrl.addTask(
           input.title,
           input.description,
@@ -193,17 +250,43 @@ const App = (function(TaskCtrl, UICtrl) {
           input.stage
         );
         // console.log(newTask)
+        // console.log(TaskCtrl.logData());
         UICtrl.addTaskItem(newTask);
       }
 
       UICtrl.clearInput();
       e.preventDefault();
     };
+
     document
       .querySelector(UISelectors.btnEl)
       .addEventListener("click", taskAddSubmit);
+    document
+      .querySelector(UISelectors.kanbanSection)
+      .addEventListener("click", taskDeleteSubmit);
   };
 
+  const taskDeleteSubmit = function(e) {
+    const UISelectorsDelete = UICtrl.getSelectors();
+    const fieldInput = UICtrl.getTaskInput();
+
+    if (e.target.className === UISelectorsDelete.removeIcon2) {
+      const currentTask = TaskCtrl.getCurrentTask();
+      // console.log("Hej");
+      console.log(currentTask);
+      // Delete from data structure
+      TaskCtrl.deleteTask(currentTask);
+
+      // Delete from UI
+      UICtrl.deleteTaskItem(currentTask);
+    } else {
+      console.log("Something went wrong!");
+    }
+
+    // console.log(e.target.className);
+
+    e.preventDefault();
+  };
   // console.log(TaskCtrl.logData().task)
   // console.log(TaskCtrl.getTasks())
   return {
@@ -211,7 +294,6 @@ const App = (function(TaskCtrl, UICtrl) {
       // console.log('Initializing App...');
 
       const tasks = TaskCtrl.getTasks();
-      console.log(tasks);
 
       UICtrl.populateTaskList(tasks);
 
