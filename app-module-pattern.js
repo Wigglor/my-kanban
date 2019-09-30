@@ -15,14 +15,14 @@ const TaskCtrl = (function() {
   // Data Structure / State / dummy data
   const data = {
     task: [
-      {
-        title: "Number 1",
-        description: "Kanban Item 1",
-        priority: "low",
-        stage: "doing",
-        points: 1,
-        id: 0
-      }
+      // {
+      //   title: "Number 1",
+      //   description: "Kanban Item 1",
+      //   priority: "low",
+      //   stage: "doing",
+      //   points: 1,
+      //   id: 0
+      // }
       // ,
       // {
       //   title: "Number 2",
@@ -67,19 +67,32 @@ const TaskCtrl = (function() {
 
       return newTask;
     },
+    getTaskById: function(id){
+      let found = null;
+      // Loop through items
+      data.task.forEach(function(tsk){
+        if(tsk.id === id){
+          found = tsk;
+        }
+      });
+      return found;
+    },
     getCurrentTask: function() {
       return data.currentTask;
     },
+    setCurrentTask: function(task){
+      return data.currentTask = task
+    },
     deleteTask: function(target) {
-      console.log(target);
+      // console.log(target);
 
       const ids = data.task.map(function(tsk) {
         return tsk.id;
       });
-      console.log(ids);
+      // console.log(ids);
 
       const index = ids.indexOf(target);
-      console.log(index);
+      // console.log(index);
       data.task.splice(index, 1);
 
       // console.log(index);
@@ -220,7 +233,26 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.descriptionInput).value = "";
     },
     deleteTaskItem: function(target) {
-      console.log(target);
+      console.log(target)
+      // console.log(typeof target.id)
+// const mySelector = document.querySelector(UISelectors.itemTask)
+// console.log(mySelector)
+      // const myString = target.id.toString()
+      // console.log(typeof myString)
+      // console.log(target.id)
+      // const taskID = `#id-${target.id}`;
+      // console.log(taskID)
+      // const task = document.querySelector(taskID);
+      // task.remove();
+
+
+      // console.log(target.id.toString());
+      // const taskID = `${target.id.toString()}`;
+      // const task = document.querySelector(taskID);
+      // console.log(task)
+    
+      
+      
       // if (target.className === "fas fa-times") {
       //   console.log(target);
       //   // target.parentNode.remove();
@@ -238,9 +270,9 @@ const App = (function(TaskCtrl, UICtrl) {
 
     const taskAddSubmit = function(e) {
       const input = UICtrl.getTaskInput();
-      console.log(input.title);
-      console.log(input);
-      console.log(input);
+      // console.log(input.title);
+      // console.log(input);
+      // console.log(input);
 
       if (input.title !== "" && input.description !== "") {
         const newTask = TaskCtrl.addTask(
@@ -269,11 +301,28 @@ const App = (function(TaskCtrl, UICtrl) {
   const taskDeleteSubmit = function(e) {
     const UISelectorsDelete = UICtrl.getSelectors();
     const fieldInput = UICtrl.getTaskInput();
-
+    
+    // console.log(currentTask)
     if (e.target.className === UISelectorsDelete.removeIcon2) {
+      // console.log(e.target.parentNode.id)
+      const id = parseInt(e.target.parentNode.id)
+      // console.log(id)
+      const id2 = e.target.parentNode.id
+      // console.log(id2.split("id-"))
+      const split = id2.split("id-")
+      // console.log(split[1])
+      const parseSplitId = parseInt(split[1]) 
+      // console.log(parseSplitId)
+      
+      console.log(id)
+      const taskToDelete = TaskCtrl.getTaskById(id);
+      // console.log(taskToDelete)
+      TaskCtrl.setCurrentTask(taskToDelete)
+
       const currentTask = TaskCtrl.getCurrentTask();
+      console.log(currentTask)
       // console.log("Hej");
-      console.log(currentTask);
+      
       // Delete from data structure
       TaskCtrl.deleteTask(currentTask);
 
