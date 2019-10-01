@@ -85,18 +85,19 @@ const TaskCtrl = (function() {
       // const matchID = data.task.map(function(myID) {
       //   return myID === task;
       // });
-      console.log(task);
-      const newMap = data.task.map(function(dataTask) {
-        if (dataTask.id === task) {
-          console.log(dataTask);
-          return dataTask;
-        }
-      });
-      // console.log(data.task[0]);
 
-      console.log(newMap[0]);
-      return (data.currentTask = newMap[0]);
-      // return (data.currentTask = task);
+      // console.log(task);
+      // const newMap = data.task.map(function(dataTask) {
+      //   if (dataTask.id === task) {
+      //     console.log(dataTask);
+      //     return dataTask;
+      //   }
+      // });
+      // console.log(data.task[0]);
+      console.log(task);
+      // console.log(newMap[0]);
+      // return (data.currentTask = newMap[0]);
+      return (data.currentTask = task);
     },
     deleteTask: function(target) {
       // console.log(target);
@@ -324,10 +325,11 @@ const App = (function(TaskCtrl, UICtrl) {
       split = taskID.split("id-");
       ID = parseInt(split[1]);
 
-      TaskCtrl.setCurrentTask(ID);
-      // console.log(TaskCtrl.setCurrentTask(ID));
       const currentTask = TaskCtrl.getCurrentTask();
       // console.log(currentTask);
+      const getTasktoSet = TaskCtrl.getTaskById(ID);
+      // console.log(getTasktoSet);
+      TaskCtrl.setCurrentTask(getTasktoSet);
 
       //Delete from Data structure
       TaskCtrl.deleteTask(ID);
