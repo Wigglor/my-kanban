@@ -61,17 +61,18 @@ const TaskCtrl = (function() {
         ID = 0;
       }
 
+      // console.log(ID);
       newTask = new Task(title, description, priority, stage, ID);
-      // console.log(newTask);
+      console.log(newTask);
       data.task.push(newTask);
 
       return newTask;
     },
-    getTaskById: function(id){
+    getTaskById: function(id) {
       let found = null;
       // Loop through items
-      data.task.forEach(function(tsk){
-        if(tsk.id === id){
+      data.task.forEach(function(tsk) {
+        if (tsk.id === id) {
           found = tsk;
         }
       });
@@ -80,8 +81,22 @@ const TaskCtrl = (function() {
     getCurrentTask: function() {
       return data.currentTask;
     },
-    setCurrentTask: function(task){
-      return data.currentTask = task
+    setCurrentTask: function(task) {
+      // const matchID = data.task.map(function(myID) {
+      //   return myID === task;
+      // });
+      console.log(task);
+      const newMap = data.task.map(function(dataTask) {
+        if (dataTask.id === task) {
+          console.log(dataTask);
+          return dataTask;
+        }
+      });
+      // console.log(data.task[0]);
+
+      console.log(newMap[0]);
+      return (data.currentTask = newMap[0]);
+      // return (data.currentTask = task);
     },
     deleteTask: function(target) {
       // console.log(target);
@@ -138,6 +153,7 @@ const UICtrl = (function() {
     doneOutput: "#done-output",
     queueOutput: "#queue-output",
     itemTask: ".kanban-item-task",
+    itemTaskinfo: "kanban-item-info-area",
     removeIcon: ".fas.fa-times",
     removeIcon2: "fas fa-times"
   };
@@ -150,6 +166,7 @@ const UICtrl = (function() {
       tasks.forEach(function(task) {
         html += `
         <div class="kanban-item-task">
+        <div class="kanban-item-info-area">
                 <i class="fas fa-times"></i>  
                 <h2>${task.title}</h2>
                 <p>${task.description}</p>
@@ -157,6 +174,7 @@ const UICtrl = (function() {
                 <p><b>Stage: </b>${task.stage}</p>
                 <p><b>Points: </b>${task.points}</p>
                 <p><b>ID: </b>${task.id}</p>
+            </div>
             </div>
                 `;
       });
@@ -171,14 +189,16 @@ const UICtrl = (function() {
       const div = document.createElement("div");
       div.className = `kanban-item-task-${task.priority.value}`;
       // div.id = `task-${task.id}`;
-      div.id = `${task.id}`;
+      div.id = `id-${task.id}`;
       div.innerHTML = `
+      <div class="kanban-item-info-area">
       <i class="fas fa-times"></i>  
       <h2>${task.title}</h2>
       <p>${task.description}</p>
       <p><b>Prio: </b>${task.priority.value}</p>
       <p><b>Stage: </b>${task.stage.value}</p>
       <p><b>ID: </b>${task.id}</p>
+      </div>
       `;
 
       if (task.stage.value === "todo") {
@@ -233,31 +253,30 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.descriptionInput).value = "";
     },
     deleteTaskItem: function(target) {
-      console.log(target)
+      const element = document.getElementById(target);
+      element.parentNode.removeChild(element);
+      /*
+      // console.log(target);
       // console.log(typeof target.id)
-// const mySelector = document.querySelector(UISelectors.itemTask)
-// console.log(mySelector)
-      // const myString = target.id.toString()
-      // console.log(typeof myString)
+      // const mySelector = document.querySelector(UISelectors.itemTask)
+      // console.log(mySelector)
+      const myString = target.toString();
+      console.log(myString);
       // console.log(target.id)
-      // const taskID = `#id-${target.id}`;
-      // console.log(taskID)
+      const taskID = `#id-${myString}`;
+      console.log(taskID);
       // const task = document.querySelector(taskID);
       // task.remove();
-
-
       // console.log(target.id.toString());
       // const taskID = `${target.id.toString()}`;
       // const task = document.querySelector(taskID);
       // console.log(task)
-    
-      
-      
       // if (target.className === "fas fa-times") {
       //   console.log(target);
       //   // target.parentNode.remove();
       //   // TaskCtrl.deleteTask(target);
       // }
+      */
     }
   };
 })();
@@ -299,38 +318,62 @@ const App = (function(TaskCtrl, UICtrl) {
   };
 
   const taskDeleteSubmit = function(e) {
-    const UISelectorsDelete = UICtrl.getSelectors();
-    const fieldInput = UICtrl.getTaskInput();
-    
+    let taskID, split, ID;
+    taskID = e.target.parentNode.parentNode.id;
+    if (taskID) {
+      split = taskID.split("id-");
+      ID = parseInt(split[1]);
+
+      TaskCtrl.setCurrentTask(ID);
+      // console.log(TaskCtrl.setCurrentTask(ID));
+      const currentTask = TaskCtrl.getCurrentTask();
+      // console.log(currentTask);
+
+      //Delete from Data structure
+      TaskCtrl.deleteTask(ID);
+
+      //Delete from UI
+      UICtrl.deleteTaskItem(taskID);
+    }
+
+    /*// console.log(e.target);
     // console.log(currentTask)
-    if (e.target.className === UISelectorsDelete.removeIcon2) {
+    // if (e.target.className === UISelectorsDelete.removeIcon2) {
+    if (e.target.className === UISelectorsDelete.itemTaskinfo) {
       // console.log(e.target.parentNode.id)
-      const id = parseInt(e.target.parentNode.id)
-      // console.log(id)
-      const id2 = e.target.parentNode.id
+      const id = parseInt(e.target.parentNode.id);
+      // console.log(id);
+      const id2 = e.target.parentNode.id;
       // console.log(id2.split("id-"))
-      const split = id2.split("id-")
+      const split = id2.split("id-");
       // console.log(split[1])
-      const parseSplitId = parseInt(split[1]) 
+      const parseSplitId = parseInt(split[1]);
       // console.log(parseSplitId)
-      
-      console.log(id)
-      const taskToDelete = TaskCtrl.getTaskById(id);
+
+      // console.log(id);
+      // const taskToDelete = TaskCtrl.getTaskById(id);
+      const taskToDelete = TaskCtrl.getTaskById(parseSplitId);
       // console.log(taskToDelete)
-      TaskCtrl.setCurrentTask(taskToDelete)
+      TaskCtrl.setCurrentTask(taskToDelete);
 
       const currentTask = TaskCtrl.getCurrentTask();
-      console.log(currentTask)
+      // console.log(currentTask);
       // console.log("Hej");
-      
+
       // Delete from data structure
       TaskCtrl.deleteTask(currentTask);
 
       // Delete from UI
-      UICtrl.deleteTaskItem(currentTask);
+      // UICtrl.deleteTaskItem(currentTask.id);
+      console.log(uuidv1());
+
+      const taskID = `#id-${currentTask.id.toString()}`;
+      console.log(taskID);
+      const task = document.querySelector(taskID);
+      task.remove();
     } else {
       console.log("Something went wrong!");
-    }
+    }*/
 
     // console.log(e.target.className);
 

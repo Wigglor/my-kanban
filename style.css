@@ -123,18 +123,22 @@ body {
   margin-bottom: 15px;
 }
 
-.kanban-item-task-high {
+/* .kanban-item-task-high {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background: rgb(252, 5, 5);
-  /* padding: 30px; */
+  padding: 30px; 
   flex-basis: 20%;
-  /* height: 20px; */
+  height: 20px; 
   border-radius: 5px;
   text-align: center;
   margin-bottom: 15px;
-}
+} */
+
+/* .kanban-item-info-area {
+  display: flex;
+} */
 
 .kanban-item-task-queue {
   display: flex;
