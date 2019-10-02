@@ -194,11 +194,13 @@ const UICtrl = (function() {
       div.innerHTML = `
       <div class="kanban-item-info-area">
       <i class="fas fa-times"></i>  
+      <div contenteditable="true">
       <h2>${task.title}</h2>
       <p>${task.description}</p>
       <p><b>Prio: </b>${task.priority.value}</p>
       <p><b>Stage: </b>${task.stage.value}</p>
       <p><b>ID: </b>${task.id}</p>
+      </div>
       </div>
       `;
 
@@ -254,8 +256,10 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.descriptionInput).value = "";
     },
     deleteTaskItem: function(target) {
+
       const element = document.getElementById(target);
       element.parentNode.removeChild(element);
+      
       /*
       // console.log(target);
       // console.log(typeof target.id)
@@ -324,7 +328,8 @@ const App = (function(TaskCtrl, UICtrl) {
     if (taskID) {
       split = taskID.split("id-");
       ID = parseInt(split[1]);
-
+      console.log(split)
+      
       const currentTask = TaskCtrl.getCurrentTask();
       // console.log(currentTask);
       const getTasktoSet = TaskCtrl.getTaskById(ID);
@@ -336,6 +341,7 @@ const App = (function(TaskCtrl, UICtrl) {
 
       //Delete from UI
       UICtrl.deleteTaskItem(taskID);
+      
     }
 
     /*// console.log(e.target);
